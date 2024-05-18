@@ -1,0 +1,72 @@
+For_Each
+/ITERATION_PARAMETER_NAME=currentSubject
+! /ITERATION_PARAMETER_COUNT_NAME=
+/ITEMS=02+03+04+05+06+07+08+09+10+12+13+15+16+18+19+20+21+22+23+24+25+26+27+28+29+30+31+32+33+34+35+36
+;
+
+File_Open
+/FILE_NAME=C:\Users\Vicon\Desktop\Temp Processing Added Mass\Test\Outlier Test\Subject&::currentSubject&ALL.cmz
+! /SUFFIX=
+! /SET_PROMPT=File_Open
+! /FILTER=
+! /ON_FILE_NOT_FOUND=PROMPT
+;
+
+Select_Active_File
+/FILE_NAME=ALL_FILES
+;
+
+Metric_From_C3D_Parameter
+/METRIC_NAME=subjectName
+/PARAMETER_GROUP=SUBJECTS
+/PARAMETER_NAME=NAMES
+;
+
+For_Each
+/ITERATION_PARAMETER_NAME=FileNo
+! /ITERATION_PARAMETER_COUNT_NAME=
+/ITEMS=00_C+00_M+00_F+11_C+11_M+11_F+12_C+12_M+12_F+13_C+13_M+13_F+21_C+21_M+21_F+22_C+22_M+22_F+23_C+23_M+23_F+31_C+31_M+31_F+32_C+32_M+32_F+33_C+33_M+33_F
+;
+
+Select_Active_File
+/FILE_NAME=*&::FileNo&.c3d
+! /QUERY=
+;
+
+Export_Data_To_Matfile
+/SIGNAL_TYPES=DERIVED+DERIVED+DERIVED+DERIVED+DERIVED+DERIVED
+/SIGNAL_FOLDER=NORMALIZED+NORMALIZED+NORMALIZED+NORMALIZED+NORMALIZED+NORMALIZED
+/SIGNAL_NAMES=RM_HIP+RM_KNEE+RM_ANKLE+LM_HIP+LM_KNEE+LM_ANKLE
+/FILE_NAME=C:\Users\Vicon\Desktop\Temp Processing Added Mass\Test\Outlier Test\Subject&::currentSubject&_&::FileNo&.mat
+/MATLAB_NAMES=momentHipR+momentKneeR+momentAnkleR+momentHipL+momentKneeL+momentAnkleL
+! /PARAMETER_NAMES=
+! /PARAMETER_GROUPS=
+! /OUTPUT_PARAMETER_NAMES=
+! /USE_NAN_FOR_DATANOTFOUND=FALSE
+;
+
+End_For_Each
+/ITERATION_PARAMETER_NAME=FileNo
+;
+
+File_Close
+/FILE_NAME=ALL_FILES
+! /QUERY=
+;
+
+Exit_Workspace
+
+;
+
+Close_Calibration_File
+/CALIBRATION_FILE=ALL_FILES
+;
+
+Unload_CMO_Library
+
+;
+
+End_For_Each
+/ITERATION_PARAMETER_NAME=currentSubject
+;
+
